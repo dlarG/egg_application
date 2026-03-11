@@ -1,5 +1,5 @@
-import psycopg
-from psycopg.rows import dict_row
+import psycopg2
+from psycopg2.extras import RealDictCursor
 import os
 from dotenv import load_dotenv
 
@@ -12,22 +12,23 @@ class Database:
     
     def connect(self):
         try:
-            # Build connection string
-            connection_string = (
-                f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
-                f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-            )
+            # Connection parameters
+            connection_params = {
+                'host': os.getenv('DB_HOST', 'localhost'),
+                'database': os.getenv('DB_NAME', 'postgres'),
+                'user': os.getenv('DB_USER', 'postgres'),
+                'password': os.getenv('DB_PASSWORD'),
+                'port': int(os.getenv('DB_PORT', 5432)),
+                'cursor_factory': RealDictCursor
+            }
             
             # Add SSL for cloud databases
-            if 'supabase.com' in os.getenv('DB_HOST', ''):
-                connection_string += "?sslmode=require"
+            if 'supabase.com' in connection_params['host']:
+                connection_params['sslmode'] = 'require'
             
-            self.connection = psycopg.connect(
-                connection_string,
-                row_factory=dict_row
-            )
+            self.connection = psycopg2.connect(**connection_params)
             
-            print(f"✅ Connected to database: {os.getenv('DB_HOST')}")
+            print(f"✅ Connected to database: {connection_params['host']}")
             return self.connection
             
         except Exception as e:
