@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Configure CORS for production
 if os.getenv('FLASK_ENV') == 'production':
     # In production, you might want to restrict origins
-    CORS(app, origins=['https://yourdomain.com', 'http://localhost:5173/login'])  # Replace with your frontend URL
+    CORS(app, origins=['https://yourdomain.com', 'http://localhost:5173'])  # Replace with your frontend URL
 else:
     # In development, allow all origins
     CORS(app)
