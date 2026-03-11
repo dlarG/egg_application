@@ -9,12 +9,16 @@ load_dotenv()
 
 app = Flask(__name__)
 
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://tejero-egg-application.netlify.app')
+
 # Configure CORS for production
 if os.getenv('FLASK_ENV') == 'production':
-    # In production, you might want to restrict origins
-    CORS(app, origins=['https://yourdomain.com', 'http://localhost:5173'])  # Replace with your frontend URL
+    CORS(app, origins=[
+        FRONTEND_URL,
+        'http://localhost:5173',  # For local development
+        'https://tejero-egg-application.netlify.app'  # Your Netlify URL
+    ], supports_credentials=True)
 else:
-    # In development, allow all origins
     CORS(app)
 
 # Configure Flask from environment variables
