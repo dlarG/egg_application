@@ -12,17 +12,27 @@ class Database:
     
     def connect(self):
         try:
-            self.connection = psycopg2.connect(
-                host=os.getenv('DB_HOST', 'localhost'),
-                database=os.getenv('DB_NAME', 'postgres'),
-                user=os.getenv('DB_USER', 'postgres'),
-                password=os.getenv('DB_PASSWORD'),
-                port=int(os.getenv('DB_PORT', 5432)),
-                cursor_factory=RealDictCursor
-            )
+            # Connection parameters
+            connection_params = {
+                'host': os.getenv('DB_HOST', 'localhost'),
+                'database': os.getenv('DB_NAME', 'postgres'),
+                'user': os.getenv('DB_USER', 'postgres'),
+                'password': os.getenv('DB_PASSWORD'),
+                'port': int(os.getenv('DB_PORT', 5432)),
+                'cursor_factory': RealDictCursor
+            }
+            
+            # Add SSL for cloud databases
+            if 'supabase.com' in connection_params['host']:
+                connection_params['sslmode'] = 'require'
+            
+            self.connection = psycopg2.connect(**connection_params)
+            
+            print(f"✅ Connected to database: {connection_params['host']}")
             return self.connection
+            
         except Exception as e:
-            print(f"Error connecting to database: {e}")
+            print(f"❌ Error connecting to database: {e}")
             return None
     
     def disconnect(self):
