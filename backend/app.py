@@ -9,20 +9,13 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configure CORS - Allow both development and production origins
-allowed_origins = [
-    'http://localhost:3000',    # React default
-    'http://localhost:5173',    # Vite default
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173',
-    'https://yourdomain.com'    # Replace with your actual production domain
-]
-
-CORS(app, 
-     origins=allowed_origins,
-     methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-     allow_headers=['Content-Type', 'Authorization'],
-     supports_credentials=True)
+# Configure CORS for production
+if os.getenv('FLASK_ENV') == 'production':
+    # Allow all origins for now, you can restrict this later
+    CORS(app, origins='*')
+else:
+    # Development CORS
+    CORS(app)
 
 # Configure Flask from environment variables
 app.config['ENV'] = os.getenv('FLASK_ENV', 'development')
@@ -33,7 +26,11 @@ app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
 @app.route('/', methods=['GET'])
 def home():
-    return {'message': 'Egg Application API', 'status': 'running'}
+    return {
+        'message': 'Egg Application API', 
+        'status': 'running',
+        'environment': app.config['ENV']
+    }
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
@@ -44,5 +41,5 @@ def health_check():
     }
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG'])
+    port = int(os.getenv('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
