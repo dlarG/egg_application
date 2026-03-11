@@ -1,6 +1,10 @@
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 class Database:
     def __init__(self):
@@ -9,11 +13,11 @@ class Database:
     def connect(self):
         try:
             self.connection = psycopg2.connect(
-                host='localhost',
-                database='postgres',
-                user='postgres',
-                password='root123',
-                port=5432,
+                host=os.getenv('DB_HOST', 'localhost'),
+                database=os.getenv('DB_NAME', 'postgres'),
+                user=os.getenv('DB_USER', 'postgres'),
+                password=os.getenv('DB_PASSWORD'),
+                port=int(os.getenv('DB_PORT', 5432)),
                 cursor_factory=RealDictCursor
             )
             return self.connection
