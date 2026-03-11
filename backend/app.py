@@ -11,10 +11,10 @@ app = Flask(__name__)
 
 # Configure CORS for production
 if os.getenv('FLASK_ENV') == 'production':
-    # Allow all origins for now, you can restrict this later
-    CORS(app, origins='*')
+    # In production, you might want to restrict origins
+    CORS(app, origins=['https://yourdomain.com', 'http://localhost:5173/login'])  # Replace with your frontend URL
 else:
-    # Development CORS
+    # In development, allow all origins
     CORS(app)
 
 # Configure Flask from environment variables
@@ -26,11 +26,7 @@ app.register_blueprint(auth_bp, url_prefix='/api/auth')
 
 @app.route('/', methods=['GET'])
 def home():
-    return {
-        'message': 'Egg Application API', 
-        'status': 'running',
-        'environment': app.config['ENV']
-    }
+    return {'message': 'Egg Application API', 'status': 'running'}
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
@@ -41,5 +37,5 @@ def health_check():
     }
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 10000))
-    app.run(host='0.0.0.0', port=port)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG'])
