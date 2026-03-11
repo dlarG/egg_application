@@ -15,7 +15,6 @@ class Customers:
             return cursor.fetchall()
         except Exception as e:
             raise e
-    
     def create_customer(self, name, contact_number=None):
         try:
             cursor = self.connection.cursor()
