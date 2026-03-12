@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContextProvider";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Router>
         <div className="min-h-screen">
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/auth" element={<Auth />} />
             <Route
               path="/dashboard"
