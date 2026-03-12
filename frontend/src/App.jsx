@@ -6,19 +6,19 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContextProvider";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen">
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/auth" element={<Auth />} />
             <Route
               path="/dashboard"
               element={
@@ -27,7 +27,10 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/" element={<Navigate to="/auth" />} />
+            {/* Keep old routes for backward compatibility */}
+            <Route path="/login" element={<Navigate to="/auth" />} />
+            <Route path="/register" element={<Navigate to="/auth" />} />
           </Routes>
         </div>
       </Router>
