@@ -23,7 +23,7 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-[#f6f5f7] font-sans p-4 sm:p-0">
       <div className="text-center w-full max-w-[768px] mx-auto">
         <div
-          className={`bg-white rounded-xl shadow-[0_14px_28px_rgba(0,0,0,0.25),0_10px_10px_rgba(0,0,0,0.22)] relative overflow-hidden w-full max-w-full min-h-[600px] sm:min-h-[480px] ${
+          className={`bg-white rounded-xl shadow-[0_14px_28px_rgba(0,0,0,0.25),0_10px_10px_rgba(0,0,0,0.22)] relative overflow-hidden w-full max-w-full min-h-[600px] sm:min-h-[480px] animate-slideUp ${
             type === "signUp"
               ? "sm:[&_.sign-in-container]:translate-x-full sm:[&_.sign-up-container]:translate-x-full sm:[&_.sign-up-container]:opacity-100 sm:[&_.sign-up-container]:z-[5] sm:[&_.overlay-container]:-translate-x-full sm:[&_.overlay]:translate-x-2/4 sm:[&_.overlay-left]:translate-x-0 sm:[&_.overlay-right]:translate-x-1/5"
               : ""
