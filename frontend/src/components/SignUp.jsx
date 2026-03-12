@@ -37,7 +37,7 @@ function SignUpForm({ onSuccess, isMobile = false }) {
         formData.password
       );
       login(response.data.token, response.data.user);
-      onSuccess();
+      onSuccess(response.data.user, response.data.redirect_path);
     } catch (error) {
       setError(error.response?.data?.error || "Registration failed");
     } finally {

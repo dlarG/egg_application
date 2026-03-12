@@ -34,7 +34,7 @@ function SignInForm({ onSuccess, isMobile = false }) {
         formData.password
       );
       login(response.data.token, response.data.user);
-      onSuccess();
+      onSuccess(response.data.user, response.data.redirect_path);
     } catch (error) {
       setError(error.response?.data?.error || "Login failed");
     } finally {

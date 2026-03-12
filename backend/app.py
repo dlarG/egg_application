@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 from routes.auth import auth_bp
+from routes.user_management import user_management_bp
 
 # Load environment variables
 load_dotenv()
@@ -16,6 +17,7 @@ if os.getenv('FLASK_ENV') == 'production':
     CORS(app, origins=[
         FRONTEND_URL,
         'http://localhost:5173',  # For local development
+        'http://192.168.3.32:5173/',  # For local network access
         'https://tejero-egg-application.netlify.app'  # Your Netlify URL
     ], supports_credentials=True)
 else:
@@ -27,6 +29,7 @@ app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(user_management_bp, url_prefix='/api/user-management')
 
 @app.route('/', methods=['GET'])
 def home():

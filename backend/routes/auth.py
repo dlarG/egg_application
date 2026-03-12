@@ -42,6 +42,10 @@ def register():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=JWT_EXPIRY_DAYS)
         }, JWT_SECRET, algorithm='HS256')
         
+        # Determine redirect path based on role
+        role = new_user['role_type']
+        redirect_path = f"/{role}-dashboard" if role in ['guest', 'staff', 'admin'] else '/staff-dashboard'
+        
         return jsonify({
             'message': 'User registered successfully',
             'token': token,
@@ -49,7 +53,8 @@ def register():
                 'id': new_user['user_id'],
                 'username': new_user['username'],
                 'role_type': new_user['role_type']
-            }
+            },
+            'redirect_path': redirect_path
         }), 201
         
     except Exception as e:
@@ -79,6 +84,10 @@ def login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(days=JWT_EXPIRY_DAYS)
         }, JWT_SECRET, algorithm='HS256')
         
+        # Determine redirect path based on role
+        role = user['role_type']
+        redirect_path = f"/{role}-dashboard" if role in ['guest', 'staff', 'admin'] else '/staff-dashboard'
+        
         return jsonify({
             'message': 'Login successful',
             'token': token,
@@ -86,7 +95,8 @@ def login():
                 'id': user['user_id'],
                 'username': user['username'],
                 'role_type': user['role_type']
-            }
+            },
+            'redirect_path': redirect_path
         }), 200
         
     except Exception as e:

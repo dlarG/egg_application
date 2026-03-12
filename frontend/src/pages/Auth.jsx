@@ -15,8 +15,15 @@ export default function Auth() {
     }
   };
 
-  const handleAuthSuccess = () => {
-    navigate("/dashboard");
+  const handleAuthSuccess = (user, redirectPath) => {
+    // Use the redirect path from the API response
+    if (redirectPath) {
+      navigate(redirectPath);
+    } else {
+      // Fallback based on user role
+      const role = user?.role_type || "staff";
+      navigate(`/${role}-dashboard`);
+    }
   };
 
   return (
