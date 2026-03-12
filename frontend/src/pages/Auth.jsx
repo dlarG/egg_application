@@ -73,12 +73,12 @@ export default function Auth() {
               <div className="bg-gradient-to-r from-[#A0D585] to-[#A0D585] text-white relative -left-full h-full w-[200%] transition-transform duration-[600ms] ease-in-out overlay">
                 {/* Overlay Left */}
                 <div className="absolute flex items-center justify-center flex-col px-6 lg:px-10 text-center top-0 h-full w-1/2 transition-transform duration-[600ms] ease-in-out -translate-x-1/5 overlay-left">
-                  <h1 className="font-bold text-2xl lg:text-3xl mb-4">
+                  <h1 className="font-bold text-2xl lg:text-3xl">
                     Welcome Back!
                   </h1>
                   <p className="text-xs lg:text-sm font-light leading-5 tracking-wide my-5 px-4">
-                    To keep connected with us please login with your personal
-                    info
+                    If you already have an account, please sign in to access
+                    your dashboard and manage your egg production efficiently.
                   </p>
                   <button
                     className="cursor-pointer bg-transparent border-2 border-white text-white text-xs font-bold py-3 px-8 lg:px-11 rounded-full uppercase tracking-wide hover:bg-white hover:text-[#A0D585] transition-colors duration-300"
@@ -91,11 +91,12 @@ export default function Auth() {
 
                 {/* Overlay Right */}
                 <div className="absolute flex items-center justify-center flex-col px-6 lg:px-10 text-center top-0 h-full w-1/2 transition-transform duration-[600ms] ease-in-out right-0 overlay-right">
-                  <h1 className="font-bold text-2xl lg:text-3xl mb-4">
+                  <h1 className="font-bold text-2xl lg:text-3xl">
                     Hello, Friend!
                   </h1>
                   <p className="text-xs lg:text-sm font-light leading-5 tracking-wide my-5 px-4">
-                    Enter your personal details and start journey with us
+                    If you don't have an account, please sign up with your
+                    personal info to start your journey with us.
                   </p>
                   <button
                     className="cursor-pointer bg-transparent border-2 border-white text-white text-xs font-bold py-3 px-8 lg:px-11 rounded-full uppercase tracking-wide hover:bg-white hover:text-[#A0D585] transition-colors duration-300"

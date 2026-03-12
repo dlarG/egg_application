@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContextProvider";
 import { authAPI } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { FaBeer, FaArrowLeft } from "react-icons/fa";
 
 function SignInForm({ onSuccess, isMobile = false }) {
   const [formData, setFormData] = useState({
@@ -10,6 +12,8 @@ function SignInForm({ onSuccess, isMobile = false }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     const value = evt.target.value;
@@ -55,7 +59,15 @@ function SignInForm({ onSuccess, isMobile = false }) {
 
   return (
     <div className={containerClasses}>
+      <button
+        className="cursor-pointer absolute top-6 left-6"
+        type="button"
+        onClick={() => navigate("/")}
+      >
+        <FaArrowLeft className="text-[#A0D585]" />
+      </button>
       <form onSubmit={handleOnSubmit} className={formClasses}>
+        <img src="/Logo/logono2.png" alt="" className="w-15 h-15" />
         <h1 className="font-bold text-2xl sm:text-3xl mb-2 text-[#A0D585]">
           Sign in
         </h1>

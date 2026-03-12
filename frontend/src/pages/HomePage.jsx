@@ -36,7 +36,7 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img
-              src="/Logo/logop1nobog.png"
+              src="/Logo/logono2.png"
               alt="Egg Management Logo"
               className="w-10 h-10"
             />
