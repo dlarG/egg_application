@@ -16,6 +16,7 @@ if os.getenv('FLASK_ENV') == 'production':
     CORS(app, origins=[
         FRONTEND_URL,
         'http://localhost:5173',  # For local development
+        'http://192.168.3.32:5173/',  # For local network access
         'https://tejero-egg-application.netlify.app'  # Your Netlify URL
     ], supports_credentials=True)
 else:

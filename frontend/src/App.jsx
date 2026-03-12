@@ -6,35 +6,47 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContextProvider";
-import Auth from "./pages/Auth";
-import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import HomePage from "./pages/HomePage";
+import Auth from "./pages/Auth";
+import AdminDashboard from "./pages/AdminDashboard";
+import StaffDashboard from "./pages/StaffDashboard";
+import GuestDashboard from "./pages/GuestDashboard";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/" element={<Navigate to="/auth" />} />
-            {/* Keep old routes for backward compatibility */}
-            <Route path="/login" element={<Navigate to="/auth" />} />
-            <Route path="/register" element={<Navigate to="/auth" />} />
-          </Routes>
-        </div>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                <StaffDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/guest-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["guest", "staff", "admin"]}>
+                <GuestDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/auth" replace />} />
+          <Route path="*" element={<Navigate to="/auth" replace />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
