@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 from routes.auth import auth_bp
+from routes.user_management import user_management_bp
 
 # Load environment variables
 load_dotenv()
@@ -28,6 +29,7 @@ app.config['DEBUG'] = os.getenv('FLASK_DEBUG', 'False').lower() == 'true'
 
 # Register blueprints
 app.register_blueprint(auth_bp, url_prefix='/api/auth')
+app.register_blueprint(user_management_bp, url_prefix='/api/user-management')
 
 @app.route('/', methods=['GET'])
 def home():
