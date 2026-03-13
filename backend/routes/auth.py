@@ -67,13 +67,22 @@ def login():
         username = data.get('username')
         password = data.get('password')
 
+        print(f"Login attempt for username: {username}")  # Debug log
+
         if not all([username, password]):
             return jsonify({'error': 'Username and password are required'}), 400
 
         user_model = User()
         user = user_model.find_by_username(username)
 
-        if not user or not user_model.verify_password(password, user['password']):
+        if not user:
+            print(f"User not found: {username}")  # Debug log
+            return jsonify({'error': 'Invalid username or password'}), 401
+
+        print(f"User found: {user['username']}, checking password...")  # Debug log
+
+        if not user_model.verify_password(password, user['password']):
+            print("Password verification failed")  # Debug log
             return jsonify({'error': 'Invalid username or password'}), 401
 
         # Generate JWT token
@@ -86,7 +95,9 @@ def login():
         
         # Determine redirect path based on role
         role = user['role_type']
-        redirect_path = f"/{role}-dashboard" if role in ['guest', 'staff', 'admin'] else '/staff-dashboard'
+        redirect_path = f"/{role}-dashboard" if role in ['staff', 'admin'] else '/staff-dashboard'
+        
+        print(f"Login successful for {username}, redirecting to {redirect_path}")  # Debug log
         
         return jsonify({
             'message': 'Login successful',
@@ -100,6 +111,7 @@ def login():
         }), 200
         
     except Exception as e:
+        print(f"Login error: {str(e)}")  # Debug log
         return jsonify({'error': str(e)}), 500
 
 # Optional: Add a route to verify token

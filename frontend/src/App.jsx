@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import GuestDashboard from "./pages/GuestDashboard";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -42,7 +43,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/auth" replace />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="*" element={<Navigate to="/auth" replace />} />
         </Routes>
       </AuthProvider>
